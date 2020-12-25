@@ -5,6 +5,17 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
+    <!-- ContextLoaderListener가 contextClass, contextConfigLocation 를 활용해서 AnnotationConfigWebApplicationContext를 만든다 -->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>me.jumen.AppConfig</param-value>
+    </context-param>
+
     <filter>
         <filter-name>myFilter</filter-name>
         <filter-class>me.jumen.MyFilter</filter-class>
@@ -15,9 +26,15 @@
         <servlet-name>hello</servlet-name>
     </filter-mapping>
 
+    <!-- <listener>
+         <listener-class>me.jumen.MyListener</listener-class>
+     </listener>-->
+
+    <!-- Servlet context의 LifeCycle에 맞춰서 ApplicationContext(Spring IoC container)를 Servlet Container에 등록해준다-->
     <listener>
-        <listener-class>me.jumen.MyListener</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
 
     <servlet>
         <servlet-name>hello</servlet-name>
