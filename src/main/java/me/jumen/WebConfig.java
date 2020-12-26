@@ -36,5 +36,6 @@ public class WebConfig {
     public HandlerAdapter handlerAdapter() {
         RequestMappingHandlerAdapter handlerAdapter = new RequestMappingHandlerAdapter();
 //        handlerAdapter.setArgumentResolvers();
+        return handlerAdapter;
     }
 }
