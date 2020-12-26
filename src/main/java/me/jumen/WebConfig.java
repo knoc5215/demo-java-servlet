@@ -1,41 +1,32 @@
 package me.jumen;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.web.servlet.HandlerAdapter;
-import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.ViewResolver;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @ComponentScan
-public class WebConfig {
+@EnableWebMvc   // 어노테이션 기반 스프링 MVC를 사용할때 편리한 웹 MVC 기본 설정
+public class WebConfig implements WebMvcConfigurer {    // @EnableWebMvc가 제공하는 빈을 커스터마이징할 수 있는 기능을 제공하는 인터페이스
 
-    @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/");
-        viewResolver.setSuffix((".jsp"));
-        return viewResolver;
+
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.jsp("/WEB-INF/", ".jsp");
+//        registry.enableContentNegotiation();  // accept header customizing
     }
 
-    @Bean
-    public HandlerMapping handlerMapping() {
-        RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
-        handlerMapping.setInterceptors();
-        handlerMapping.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return handlerMapping;
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+
     }
 
-    @Bean
-    public HandlerAdapter handlerAdapter() {
-        RequestMappingHandlerAdapter handlerAdapter = new RequestMappingHandlerAdapter();
-//        handlerAdapter.setArgumentResolvers();
-        return handlerAdapter;
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
     }
 }
